@@ -1,0 +1,33 @@
+{
+  "name": "@grunt/daemon",
+  "version": "0.0.0",
+  "description": "grunt daemon",
+  "author": "Chris Shepherd <thesheps@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "dist/daemon.js",
+  "directories": {
+    "dist": "dist",
+    "test": "__tests__"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "test": "jest",
+    "deploy": "npm run build && sls deploy",
+    "harness": "ts-node -p TestHarness.ts"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.614.0",
+    "isomorphic-git": "^0.78.3",
+    "nodegit": "^0.26.4",
+    "serverless": "^1.63.0",
+    "ts-node": "^8.6.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.1.2",
+    "@types/node": "^13.7.0",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.0",
+    "typescript": "^3.7.5"
+  }
+}
