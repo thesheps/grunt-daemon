@@ -32,10 +32,18 @@ export default async (task: Task) => {
   });
 
   const command = spawn("sh", ["init.sh"], {
-    cwd: `${task.workspaceDir}/.grunt`,
-    stdio: [process.stdin, process.stdout, process.stderr]
+    cwd: `${task.workspaceDir}/.grunt`
   });
 
-  console.log("stdout: ", command.stdout.toString("utf-8"));
-  console.log("stderr: ", command.stderr.toString("utf-8"));
+  command.stdout.on("data", data => {
+    console.log(`stdout: ${data}`);
+  });
+
+  command.stderr.on("data", data => {
+    console.log(`stderr: ${data}`);
+  });
+
+  command.on("close", code => {
+    console.log(`child process exited with code ${code}`);
+  });
 };
