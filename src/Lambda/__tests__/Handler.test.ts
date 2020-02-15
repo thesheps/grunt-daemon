@@ -1,9 +1,9 @@
 import { Context } from "aws-lambda";
 
 import Handler from "../Handler";
-import Process from "../Process";
+import Process from "../../Core/Process";
 
-jest.mock("../Process");
+jest.mock("../../Core/Process");
 
 describe("Handler", () => {
   it("calls the process function with the expected values", () => {

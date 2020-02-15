@@ -1,8 +1,8 @@
 import { Context } from "aws-lambda";
 
-import Process from "./Process";
+import Process from "../Core/Process";
 import Event from "./Event";
-import Task from "./Task";
+import Task from "../Core/Task";
 
 export default {
   handle: (event: Event, context: Context) => {

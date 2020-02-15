@@ -7,4 +7,4 @@ provider:
 
 functions:
   grunt-daemon:
-    handler: dist/handler.handle
+    handler: dist/Lambda/Handler.handle
