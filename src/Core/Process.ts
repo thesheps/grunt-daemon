@@ -32,7 +32,8 @@ export default async (task: Task) => {
   });
 
   const command = spawnSync("sh", ["init.sh"], {
-    cwd: `${task.workspaceDir}/.grunt`
+    cwd: `${task.workspaceDir}/.grunt`,
+    stdio: [process.stdin, process.stdout, process.stderr]
   });
 
   console.log("stdout: ", command.stdout);

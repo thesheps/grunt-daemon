@@ -11,6 +11,8 @@ jest.mock("fs");
 jest.mock("aws-sdk");
 jest.mock("isomorphic-git");
 
+console.log = jest.fn();
+
 describe("Process", () => {
   const mockGetSecretValue = jest.fn();
   const mockPromise = jest.fn();
@@ -83,7 +85,8 @@ describe("Process", () => {
       await Process(task);
 
       expect(spawnSync).toHaveBeenCalledWith("sh", ["init.sh"], {
-        cwd: `${task.workspaceDir}/.grunt`
+        cwd: `${task.workspaceDir}/.grunt`,
+        stdio: [process.stdin, process.stdout, process.stderr]
       });
     });
   });
