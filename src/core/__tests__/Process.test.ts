@@ -1,10 +1,12 @@
 import * as fs from "fs";
+import { spawnSync } from "child_process";
 import { SecretsManager } from "aws-sdk";
 import { clone, plugins } from "isomorphic-git";
 
 import Process from "../Process";
 import Task from "../Task";
 
+jest.mock("child_process");
 jest.mock("fs");
 jest.mock("aws-sdk");
 jest.mock("isomorphic-git");
@@ -71,10 +73,18 @@ describe("Process", () => {
   });
 
   describe("Task execution", () => {
-    it("executes the specified task after cloning the repo", async () => {
+    (spawnSync as jest.Mock).mockReturnValue(() => ({
+      stdOut: "",
+      stdErr: "",
+      status: ""
+    }));
+
+    it("executes a script named 'init.sh' if one isn't otherwise provided", async () => {
       await Process(task);
 
-      expect(plugins.set).toHaveBeenCalledWith("fs", fs);
+      expect(spawnSync).toHaveBeenCalledWith("sh", ["init.sh"], {
+        cwd: `${task.workspaceDir}/.grunt`
+      });
     });
   });
 });
