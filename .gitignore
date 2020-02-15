@@ -1,13 +1,10 @@
+### Node ###
 **/node_modules/
 yarn-error.log
 npm-debug.log
 **/dist
+**/lib
 .DS_STORE
-# Created by https://www.gitignore.io/api/serverless
-# Edit at https://www.gitignore.io/?templates=serverless
 
 ### Serverless ###
-# Ignore build directory
 **/.serverless
-
-# End of https://www.gitignore.io/api/serverless

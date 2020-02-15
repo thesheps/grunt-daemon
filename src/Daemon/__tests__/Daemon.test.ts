@@ -7,7 +7,7 @@ jest.mock("aws-sdk");
 describe("daemon", () => {
   it("configures aws with the specified values", () => {
     const queueUrl = "https://sqs.eu-west-1.amazonaws.com/123456789012/mytopic";
-    const daemon = new Daemon({ region: "eu-west-1", queueUrl });
+    new Daemon({ region: "eu-west-1", queueUrl });
 
     expect(config.update).toHaveBeenCalledWith({ region: "eu-west-1" });
     expect(SQS).toHaveBeenCalledWith({ apiVersion: "2012-11-05" });

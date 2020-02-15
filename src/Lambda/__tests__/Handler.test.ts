@@ -1,7 +1,7 @@
 import { Context } from "aws-lambda";
 
-import Handler from "../Handler";
 import Process from "../../Core/Process";
+import { handle } from "../Handler";
 
 jest.mock("../../Core/Process");
 
@@ -13,7 +13,7 @@ describe("Handler", () => {
     const repoPasswordKey = "PasswordKey";
     process.env.AWS_REGION = "MY_TEST_REGION";
 
-    Handler.handle({ repoUrl, repoUsernameKey, repoPasswordKey }, context);
+    handle({ repoUrl, repoUsernameKey, repoPasswordKey }, context);
 
     expect(Process).toHaveBeenCalledWith({
       awsRegion: process.env.AWS_REGION,

@@ -11,24 +11,30 @@
     "test": "__tests__"
   },
   "scripts": {
-    "build": "tsc --build",
+    "types": "tsc --build",
     "test": "jest",
-    "deploy": "npm run build && sls deploy",
+    "build": "sls webpack",
+    "deploy": "sls deploy",
     "harness": "ts-node -p TestHarness.ts"
   },
   "dependencies": {
     "aws-sdk": "^2.614.0",
-    "isomorphic-git": "^0.78.3",
-    "nodegit": "^0.26.4",
-    "serverless": "^1.63.0",
-    "ts-node": "^8.6.2"
+    "isomorphic-git": "^0.78.3"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.41",
     "@types/jest": "^25.1.2",
     "@types/node": "^13.7.0",
+    "fork-ts-checker-webpack-plugin": "^4.0.4",
     "jest": "^25.1.0",
+    "serverless": "^1.63.0",
+    "serverless-webpack": "^5.3.1",
     "ts-jest": "^25.2.0",
-    "typescript": "^3.7.5"
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-node-externals": "^1.7.2"
   }
 }
