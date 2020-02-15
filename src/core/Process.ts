@@ -36,7 +36,7 @@ export default async (task: Task) => {
   });
 
   command.stdout.on("data", data => {
-    console.log(`stdout: ${data}`);
+    console.log(`stdout: ${data.toString()}`);
   });
 
   command.stderr.on("data", data => {
