@@ -3,8 +3,8 @@ service: grunt
 provider:
   name: aws
   runtime: nodejs12.x
-  region: eu-west-2
+  region: eu-west-1
 
 functions:
   grunt-daemon:
-    handler: dist/handler.process
+    handler: dist/handler.handle
