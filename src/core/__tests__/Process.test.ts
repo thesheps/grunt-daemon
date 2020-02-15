@@ -18,7 +18,7 @@ describe("Process", () => {
     awsRegion: "eu-west-1",
     repoUsernameKey: "My Username",
     repoPasswordKey: "My Password",
-    processId: "12345",
+    workspaceDir: "workspace",
     repoUrl: "repoUrl"
   };
 
@@ -41,11 +41,11 @@ describe("Process", () => {
     await Process(task);
 
     expect(mockGetSecretValue).toHaveBeenNthCalledWith(1, {
-      SecretId: `/grunt/${task.environment}/${task.repoUsernameKey}`
+      SecretId: `grunt/${task.environment}/${task.repoUsernameKey}`
     });
 
     expect(mockGetSecretValue).toHaveBeenNthCalledWith(2, {
-      SecretId: `/grunt/${task.environment}/${task.repoPasswordKey}`
+      SecretId: `grunt/${task.environment}/${task.repoPasswordKey}`
     });
   });
 
@@ -54,7 +54,7 @@ describe("Process", () => {
 
     expect(clone).toHaveBeenCalledWith({
       url: task.repoUrl,
-      dir: task.processId,
+      dir: task.workspaceDir,
       username: "JoeBloggs",
       password: "DeadStrongPassword"
     });

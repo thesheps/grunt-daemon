@@ -1,14 +1,17 @@
 import * as fs from "fs";
 import { SecretsManager } from "aws-sdk";
-import { clone } from "isomorphic-git";
-import { plugins } from "isomorphic-git";
+import { clone, plugins } from "isomorphic-git";
 
 import Task from "./Task";
 
+const getKeyPath = (env: string, key: string) => {
+  return `grunt/${env}/${key}`;
+};
+
 export default async (task: Task) => {
-  const repoUsernameKey = `/grunt/${task.environment}/${task.repoUsernameKey}`;
-  const repoPasswordKey = `/grunt/${task.environment}/${task.repoPasswordKey}`;
   const secretsManager = new SecretsManager({ region: "eu-west-1" });
+  const repoUsernameKey = getKeyPath(task.environment, task.repoUsernameKey);
+  const repoPasswordKey = getKeyPath(task.environment, task.repoPasswordKey);
 
   const username = await secretsManager
     .getSecretValue({ SecretId: repoUsernameKey })
@@ -22,7 +25,7 @@ export default async (task: Task) => {
 
   await clone({
     url: task.repoUrl,
-    dir: task.processId,
+    dir: task.workspaceDir,
     username: username.SecretString,
     password: password.SecretString
   });

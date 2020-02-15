@@ -12,15 +12,17 @@ describe("Handler", () => {
     const repoUsernameKey = "UsernameKey";
     const repoPasswordKey = "PasswordKey";
     process.env.AWS_REGION = "MY_TEST_REGION";
+    process.env.ENVIRONMENT = "dev";
 
     handle({ repoUrl, repoUsernameKey, repoPasswordKey }, context);
 
     expect(Process).toHaveBeenCalledWith({
+      environment: process.env.ENVIRONMENT,
       awsRegion: process.env.AWS_REGION,
+      workspaceDir: `/tmp/grunt-daemon/${context.awsRequestId}`,
       repoUsernameKey,
       repoPasswordKey,
-      repoUrl,
-      processId: context.awsRequestId
+      repoUrl
     });
   });
 });

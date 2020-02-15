@@ -1,7 +1,10 @@
 import Process from "./src/Core/Process";
 
 Process({
+  environment: "dev",
+  workspaceDir: "./test",
+  awsRegion: "eu-west-1",
   repoUrl: "https://github.com/thesheps/grunt-daemon",
-  processId: "thisisatest",
-  awsRegion: "eu-west-1"
+  repoUsernameKey: "repo_username",
+  repoPasswordKey: "repo_password"
 });

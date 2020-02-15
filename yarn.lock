@@ -6190,6 +6190,13 @@ serialize-javascript@^2.1.2:
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-2.1.2.tgz#ecec53b0e0317bdc95ef76ab7074b7384785fa61"
   integrity sha512-rs9OggEUF0V4jUSecXazOYsLfu7OGK2qIn3c7IPBiffz32XniEp/TX9Xmc9LQfK2nQ2QKHvZ2oygKUGU0lG4jQ==
 
+serverless-iam-roles-per-function@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/serverless-iam-roles-per-function/-/serverless-iam-roles-per-function-2.0.2.tgz#c64eb2f34552e59d5fb8cb2169ebbd27734a6774"
+  integrity sha512-3zv4Af3x7KJHC4fuJMHniEEstCljMghReaYIg94Spdsqkhiy8GJ3yfJ5Jy+wiG/DvyObK91JJNMjLhDnDc+vCQ==
+  dependencies:
+    lodash "^4.17.15"
+
 serverless-webpack@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/serverless-webpack/-/serverless-webpack-5.3.1.tgz#39c3d0b23f92273702ac418fd33fa7029e085176"

@@ -4,5 +4,5 @@ export default interface Task {
   repoUsernameKey: string;
   repoPasswordKey: string;
   repoUrl: string;
-  processId: string;
+  workspaceDir: string;
 }

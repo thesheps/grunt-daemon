@@ -28,6 +28,7 @@
     "fork-ts-checker-webpack-plugin": "^4.0.4",
     "jest": "^25.1.0",
     "serverless": "^1.63.0",
+    "serverless-iam-roles-per-function": "^2.0.2",
     "serverless-webpack": "^5.3.1",
     "ts-jest": "^25.2.0",
     "ts-loader": "^6.2.1",

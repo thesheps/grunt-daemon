@@ -1,16 +1,25 @@
 service: grunt
 
 plugins:
+  - serverless-iam-roles-per-function
   - serverless-webpack
 
 provider:
   name: aws
   runtime: nodejs12.x
   region: eu-west-1
+  stage: ${opt:stage, 'dev'}
+  environment:
+    ENVIRONMENT: ${opt:stage, 'dev'}
 
 functions:
   grunt-daemon:
     handler: src/Lambda/Handler.handle
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "secretsmanager:GetSecretValue"
+        Resource: "arn:aws:secretsmanager:${self:provider.region}:*:grunt/${opt:stage, 'dev'}/*"
 
 custom:
   webpack:
