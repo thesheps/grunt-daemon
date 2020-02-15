@@ -35,15 +35,6 @@ export default async (task: Task) => {
     cwd: `${task.workspaceDir}/.grunt`
   });
 
-  command.stdout.on("data", data => {
-    console.log(`stdout: ${data.toString()}`);
-  });
-
-  command.stderr.on("data", data => {
-    console.log(`stderr: ${data}`);
-  });
-
-  command.on("close", code => {
-    console.log(`child process exited with code ${code}`);
-  });
+  command.stdout.on("data", data => console.info(`stdout: ${data}`));
+  command.stderr.on("data", data => console.error(`stderr: ${data}`));
 };

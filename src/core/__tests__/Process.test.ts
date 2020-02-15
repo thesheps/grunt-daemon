@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { spawnSync } from "child_process";
+import { spawn } from "child_process";
 import { SecretsManager } from "aws-sdk";
 import { clone, plugins } from "isomorphic-git";
 
@@ -36,6 +36,11 @@ describe("Process", () => {
     SecretsManager.prototype.getSecretValue = mockGetSecretValue;
     mockGetSecretValue.mockReturnValue({
       promise: mockPromise
+    });
+
+    (spawn as jest.Mock).mockReturnValue({
+      stdout: { on: jest.fn() },
+      stderr: { on: jest.fn() }
     });
 
     plugins.set = jest.fn();
@@ -75,18 +80,11 @@ describe("Process", () => {
   });
 
   describe("Task execution", () => {
-    (spawnSync as jest.Mock).mockReturnValue(() => ({
-      stdOut: "",
-      stdErr: "",
-      status: ""
-    }));
-
     it("executes a script named 'init.sh' if one isn't otherwise provided", async () => {
       await Process(task);
 
-      expect(spawnSync).toHaveBeenCalledWith("sh", ["init.sh"], {
-        cwd: `${task.workspaceDir}/.grunt`,
-        stdio: [process.stdin, process.stdout, process.stderr]
+      expect(spawn).toHaveBeenCalledWith("sh", ["init.sh"], {
+        cwd: `${task.workspaceDir}/.grunt`
       });
     });
   });
