@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { SSM } from "aws-sdk";
+import { SecretsManager } from "aws-sdk";
 import { clone, plugins } from "isomorphic-git";
 
 import Process from "../Process";
@@ -10,10 +10,11 @@ jest.mock("aws-sdk");
 jest.mock("isomorphic-git");
 
 describe("Process", () => {
-  const mockGetParameter = jest.fn();
+  const mockGetSecretValue = jest.fn();
   const mockPromise = jest.fn();
 
-  const event: Task = {
+  const task: Task = {
+    environment: "dev",
     awsRegion: "eu-west-1",
     repoUsernameKey: "My Username",
     repoPasswordKey: "My Password",
@@ -25,11 +26,11 @@ describe("Process", () => {
     jest.clearAllMocks();
 
     mockPromise
-      .mockResolvedValueOnce({ Parameter: { Value: "JoeBloggs" } })
-      .mockResolvedValueOnce({ Parameter: { Value: "DeadStrongPassword" } });
+      .mockResolvedValueOnce({ SecretString: "JoeBloggs" })
+      .mockResolvedValueOnce({ SecretString: "DeadStrongPassword" });
 
-    SSM.prototype.getParameter = mockGetParameter;
-    mockGetParameter.mockReturnValue({
+    SecretsManager.prototype.getSecretValue = mockGetSecretValue;
+    mockGetSecretValue.mockReturnValue({
       promise: mockPromise
     });
 
@@ -37,46 +38,30 @@ describe("Process", () => {
   });
 
   it("obtains credentials from AWS Params Store", async () => {
-    await Process(event);
+    await Process(task);
 
-    expect(mockGetParameter).toHaveBeenNthCalledWith(1, {
-      Name: event.repoUsernameKey,
-      WithDecryption: true
+    expect(mockGetSecretValue).toHaveBeenNthCalledWith(1, {
+      SecretId: `/grunt/${task.environment}/${task.repoUsernameKey}`
     });
 
-    expect(mockGetParameter).toHaveBeenNthCalledWith(2, {
-      Name: event.repoPasswordKey,
-      WithDecryption: true
+    expect(mockGetSecretValue).toHaveBeenNthCalledWith(2, {
+      SecretId: `/grunt/${task.environment}/${task.repoPasswordKey}`
     });
   });
 
   it("clones the named repository using the provided creds", async () => {
-    await Process(event);
+    await Process(task);
 
     expect(clone).toHaveBeenCalledWith({
-      url: event.repoUrl,
-      dir: event.processId,
+      url: task.repoUrl,
+      dir: task.processId,
       username: "JoeBloggs",
       password: "DeadStrongPassword"
     });
   });
 
-  it("defaults repo key names to sensible defaults", async () => {
-    await Process({ repoUrl: "foo", processId: "bar", awsRegion: "baz" });
-
-    expect(mockGetParameter).toHaveBeenNthCalledWith(1, {
-      Name: "GruntRepoUsername",
-      WithDecryption: true
-    });
-
-    expect(mockGetParameter).toHaveBeenNthCalledWith(2, {
-      Name: "GruntRepoPassword",
-      WithDecryption: true
-    });
-  });
-
   it("configures isometric git with a filesystem", async () => {
-    await Process({ repoUrl: "foo", processId: "bar", awsRegion: "baz" });
+    await Process(task);
 
     expect(plugins.set).toHaveBeenCalledWith("fs", fs);
   });
