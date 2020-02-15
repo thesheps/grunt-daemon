@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { spawnSync } from "child_process";
+import { spawn } from "child_process";
 import { SecretsManager } from "aws-sdk";
 import { clone, plugins } from "isomorphic-git";
 
@@ -31,7 +31,7 @@ export default async (task: Task) => {
     password: password.SecretString
   });
 
-  const command = spawnSync("sh", ["init.sh"], {
+  const command = spawn("sh", ["init.sh"], {
     cwd: `${task.workspaceDir}/.grunt`,
     stdio: [process.stdin, process.stdout, process.stderr]
   });
