@@ -13,7 +13,7 @@ provider:
     ENVIRONMENT: ${opt:stage, 'dev'}
 
 functions:
-  grunt-daemon:
+  daemon:
     handler: src/Lambda/Handler.handle
     iamRoleStatements:
       - Effect: "Allow"

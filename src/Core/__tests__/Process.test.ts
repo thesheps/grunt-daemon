@@ -37,32 +37,44 @@ describe("Process", () => {
     plugins.set = jest.fn();
   });
 
-  it("obtains credentials from AWS Params Store", async () => {
-    await Process(task);
+  describe("Credentials management", () => {
+    it("obtains credentials from AWS Params Store", async () => {
+      await Process(task);
 
-    expect(mockGetSecretValue).toHaveBeenNthCalledWith(1, {
-      SecretId: `grunt/${task.environment}/${task.repoUsernameKey}`
+      expect(mockGetSecretValue).toHaveBeenNthCalledWith(1, {
+        SecretId: `grunt/${task.environment}/${task.repoUsernameKey}`
+      });
+
+      expect(mockGetSecretValue).toHaveBeenNthCalledWith(2, {
+        SecretId: `grunt/${task.environment}/${task.repoPasswordKey}`
+      });
     });
 
-    expect(mockGetSecretValue).toHaveBeenNthCalledWith(2, {
-      SecretId: `grunt/${task.environment}/${task.repoPasswordKey}`
+    it("clones the named repository using the provided creds", async () => {
+      await Process(task);
+
+      expect(clone).toHaveBeenCalledWith({
+        url: task.repoUrl,
+        dir: task.workspaceDir,
+        username: "JoeBloggs",
+        password: "DeadStrongPassword"
+      });
     });
   });
 
-  it("clones the named repository using the provided creds", async () => {
-    await Process(task);
+  describe("Source control interaction", () => {
+    it("configures isometric git with a filesystem", async () => {
+      await Process(task);
 
-    expect(clone).toHaveBeenCalledWith({
-      url: task.repoUrl,
-      dir: task.workspaceDir,
-      username: "JoeBloggs",
-      password: "DeadStrongPassword"
+      expect(plugins.set).toHaveBeenCalledWith("fs", fs);
     });
   });
 
-  it("configures isometric git with a filesystem", async () => {
-    await Process(task);
+  describe("Task execution", () => {
+    it("executes the specified task after cloning the repo", async () => {
+      await Process(task);
 
-    expect(plugins.set).toHaveBeenCalledWith("fs", fs);
+      expect(plugins.set).toHaveBeenCalledWith("fs", fs);
+    });
   });
 });
