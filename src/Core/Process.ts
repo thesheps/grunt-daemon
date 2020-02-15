@@ -36,6 +36,6 @@ export default async (task: Task) => {
     stdio: [process.stdin, process.stdout, process.stderr]
   });
 
-  console.log("stdout: ", command.stdout.toString());
-  console.log("stderr: ", command.stderr.toString());
+  console.log("stdout: ", String(command.stdout));
+  console.log("stderr: ", String(command.stderr));
 };
