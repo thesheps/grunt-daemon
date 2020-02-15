@@ -1,4 +1,4 @@
-import Process from "./src/Process";
+import Process from "./src/Core/Process";
 
 Process({
   repoUrl: "https://github.com/thesheps/grunt-daemon",
