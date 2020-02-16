@@ -11,6 +11,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   environment:
     ENVIRONMENT: ${opt:stage, 'dev'}
+    HOME: /tmp
 
 functions:
   daemon:
