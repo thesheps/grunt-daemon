@@ -1,4 +1,4 @@
 #! /bin/bash
 
 cd ..
-npm i
+npm i --no-bin-links
