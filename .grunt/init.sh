@@ -1,4 +1,4 @@
 #! /bin/bash
 
 cd ..
-yarn install
+npm i

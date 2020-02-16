@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "aws-sdk": "^2.614.0",
-    "isomorphic-git": "^0.78.3"
+    "isomorphic-git": "^0.78.3",
+    "yarn": "^1.22.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.41",
