@@ -1,4 +1,4 @@
 #! /bin/bash
 
 cd ..
-pwd
+npm i --force
