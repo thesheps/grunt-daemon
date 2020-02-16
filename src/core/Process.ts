@@ -31,8 +31,16 @@ export default async (task: Task) => {
     password: password.SecretString
   });
 
-  const command = spawn("sh", ["init.sh"], {
-    cwd: `${task.workspaceDir}/.grunt`
+  const configFile = fs.readFileSync("gruntfile");
+  if (!configFile) {
+    console.error("Missing gruntfile! Exiting...");
+    return;
+  }
+
+  const config = JSON.parse(configFile.toString());
+
+  const command = spawn("sh", [config.script], {
+    cwd: `${task.workspaceDir}/${config.scriptDir}`
   });
 
   command.stdout.on("data", data => console.info(`stdout: ${data}`));

@@ -12,6 +12,7 @@ jest.mock("aws-sdk");
 jest.mock("isomorphic-git");
 
 console.log = jest.fn();
+console.error = jest.fn();
 
 describe("Process", () => {
   const mockGetSecretValue = jest.fn();
@@ -80,11 +81,24 @@ describe("Process", () => {
   });
 
   describe("Task execution", () => {
-    it("executes a script named 'init.sh' if one isn't otherwise provided", async () => {
+    it("exits the Lambda early if the gruntfile is missing", async () => {
       await Process(task);
 
-      expect(spawn).toHaveBeenCalledWith("sh", ["init.sh"], {
-        cwd: `${task.workspaceDir}/.grunt`
+      expect(console.error).toHaveBeenCalled();
+    });
+
+    it("executes a script in the gruntfile named by the 'script' parameter", async () => {
+      (fs.readFileSync as jest.Mock).mockReturnValue(
+        JSON.stringify({
+          script: "setup.sh",
+          scriptDir: "scriptDir"
+        })
+      );
+
+      await Process(task);
+
+      expect(spawn).toHaveBeenCalledWith("sh", ["setup.sh"], {
+        cwd: `${task.workspaceDir}/scriptDir`
       });
     });
   });

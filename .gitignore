@@ -1,6 +1,5 @@
 ### Node ###
 **/node_modules/
-yarn-error.log
 npm-debug.log
 response.json
 **/dist

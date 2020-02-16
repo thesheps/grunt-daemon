@@ -8,6 +8,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: eu-west-1
+  timeout: 900
   stage: ${opt:stage, 'dev'}
   environment:
     ENVIRONMENT: ${opt:stage, 'dev'}
@@ -25,5 +26,5 @@ functions:
 custom:
   webpack:
     webpackConfig: "webpack.config.js"
-    packager: "yarn"
+    packager: "npm"
     includeModules: true

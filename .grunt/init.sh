@@ -2,4 +2,4 @@
 
 cd ..
 npm i
-ls
+npm run deploy
