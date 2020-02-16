@@ -1,0 +1,4 @@
+{
+  "script": "init.sh",
+  "scriptDir": ".grunt"
+}

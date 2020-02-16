@@ -31,7 +31,7 @@ export default async (task: Task) => {
     password: password.SecretString
   });
 
-  const configFile = fs.readFileSync("gruntfile");
+  const configFile = fs.readFileSync("gruntfile.json");
   if (!configFile) {
     console.error("Missing gruntfile! Exiting...");
     return;
