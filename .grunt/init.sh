@@ -2,3 +2,4 @@
 
 cd ..
 npm i
+ls
