@@ -18,7 +18,7 @@
     "harness": "ts-node -p TestHarness.ts"
   },
   "dependencies": {
-    "aws-sdk": "^2.614.0",
+    "aws-sdk": "^2.814.0",
     "isomorphic-git": "^0.78.3"
   },
   "devDependencies": {
